@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Pacifico&display=swap');
+
+:root {
+  --bg-primary: #fdf9f4; /* Cream/Off-white */
+  --bg-secondary: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #5a5a5a;
+  --accent: #ff5e14; /* Coral / Maamanju Red */
+  --accent-hover: #e04a0b;
+  --border-light: #eaeaea;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+  --shadow-hover: 0 15px 40px rgba(255, 94, 20, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.script-font {
+  font-family: 'Pacifico', cursive;
+  color: var(--accent);
+  font-weight: normal;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  background: var(--bg-secondary);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  margin-left: 2rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* Hero Section with Animations */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 5%;
+  overflow: hidden;
+  background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(253, 249, 244, 0.85); /* Light overlay to make text pop */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: slideUp 1s ease forwards 0.3s;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: slideUp 1s ease forwards 0.6s;
+}
+
+.hero-btns {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards 0.9s;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* 3D Animations */
+@keyframes rotateX {
+  from { transform: perspective(1000px) rotateX(0deg); }
+  to { transform: perspective(1000px) rotateX(360deg); }
+}
+
+@keyframes rotateY {
+  from { transform: perspective(1000px) rotateY(0deg); }
+  to { transform: perspective(1000px) rotateY(360deg); }
+}
+
+@keyframes perspective {
+  from { transform: perspective(500px) scale3d(1, 1, 1); }
+  to { transform: perspective(500px) scale3d(1.05, 1.05, 1.05); }
+}
+
+/* Floating Elements in Hero */
+.floating-element {
+  position: absolute;
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.float-1 { top: 20%; left: 10%; animation-delay: 0s; }
+.float-2 { bottom: 20%; right: 10%; animation-delay: 2s; }
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 94, 20, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 94, 20, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--text-primary);
+  color: white;
+}
+
+/* Container & Cards */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 5%;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+}
+
+.glass-card, .card {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid var(--border-light);
+}
+
+.card:hover, .glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Grid */
+.grid { display: grid; gap: 2rem; }
+.grid-cols-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* Forms */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.form-control {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.1);
+}
+
+/* Footer */
+footer {
+  background: #111;
+  color: white;
+  padding: 4rem 5% 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-col h3 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.footer-col a {
+  color: #aaa;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.8rem;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+/* Utils */
+.text-center { text-align: center; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.trip-img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem; }
+
+
+/* TravelCard Translated Styles */
+.travel-card { position: relative; width: 100%; max-width: 350px; overflow: hidden; border-radius: 12px; border: 1px solid var(--border-light); background-color: var(--bg-secondary); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: all 0.3s ease-in-out; cursor: pointer; height: 450px; }
+.travel-card:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: translateY(-8px); }
+.travel-card-image { position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: 100%; object-fit: cover; transition: transform 0.5s ease-in-out; }
+.travel-card:hover .travel-card-image { transform: scale(1.1); }
+.travel-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); pointer-events: none; }
+.travel-card-content { position: relative; display: flex; height: 100%; flex-direction: column; justify-content: space-between; padding: 1.5rem; color: white; z-index: 10; }
+.travel-card-middle { margin-top: auto; margin-bottom: 2rem; transition: transform 0.5s ease-in-out; }
+.travel-card:hover .travel-card-middle { transform: translateY(-4rem); }
+.travel-card-middle h3 { font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 0.25rem; }
+.travel-card-middle p.location { font-size: 0.875rem; color: rgba(255,255,255,0.8); margin-bottom: 1rem; }
+.travel-card-middle h4 { font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 0.25rem; font-size: 0.9rem; text-transform: uppercase; }
+.travel-card-middle p.overview { font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+.travel-card-bottom { position: absolute; bottom: -5rem; left: 0; width: 100%; padding: 1.5rem; opacity: 0; transition: all 0.5s ease-in-out; display: flex; align-items: flex-end; justify-content: space-between; }
+.travel-card:hover .travel-card-bottom { bottom: 0; opacity: 1; }
+.travel-card-bottom .price-val { font-size: 2.25rem; font-weight: 700; color: white; }
+.travel-card-bottom .price-period { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+.travel-card-btn { background-color: white; color: black; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: background-color 0.2s; border: none; cursor: pointer; }
+.travel-card-btn:hover { background-color: rgba(255,255,255,0.9); }

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Manage Cities{% endblock %}
+
+{% block content %}
+<div class="glass-card" style="padding: 2rem; max-width: 1100px; margin: 2rem auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+            <h1 style="margin: 0;">City Management</h1>
+            <p style="color: var(--text-secondary);">Create, edit, and remove travel destinations.</p>
+        </div>
+        <a href="{% url 'admin_city_create' %}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add City</a>
+    </div>
+
+    {% if cities %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Cost</th>
+                <th>Popularity</th>
+                <th style="text-align:right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in cities %}
+            <tr>
+                <td>{{ city.name }}</td>
+                <td>{{ city.country }}</td>
+                <td>{{ city.cost_index }}</td>
+                <td>{{ city.popularity }}</td>
+                <td style="text-align:right;">
+                    <a href="{% url 'admin_city_edit' city.id %}" class="btn btn-secondary" style="margin-right: 0.5rem;">Edit</a>
+                    <a href="{% url 'admin_city_delete' city.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: var(--text-secondary);">No cities have been added yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}My Trips - Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-2" style="animation: fadeIn 0.8s ease forwards;">
+    <div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 0;">My Travel Dashboard</h2>
+        <p style="color: var(--text-secondary); font-size: 1.1rem;">Manage your itineraries, budgets, and companions all in one place.</p>
+    </div>
+    <a href="{% url 'create_trip' %}" class="btn btn-primary" style="box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);"><i class="fa-solid fa-plus"></i> Plan New Trip</a>
+</div>
+
+{% if trips %}
+<div class="grid grid-cols-2" style="gap: 2rem;">
+    {% for trip in trips %}
+    <div class="glass-card trip-dashboard-card" style="padding: 0; overflow: hidden; animation: fadeInUp 0.8s ease forwards; animation-delay: {{ forloop.counter0|add:1 }}00ms; opacity: 0; transform: translateY(20px);">
+        <!-- Cover Image & Badges -->
+        <div style="position: relative; height: 200px;">
+            {% if trip.cover_photo %}
+                <img src="{{ trip.cover_photo }}" alt="{{ trip.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+            {% else %}
+                <div style="width: 100%; height: 100%; background: var(--gradient); display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-map-location-dot" style="font-size: 4rem; color: rgba(255,255,255,0.4);"></i>
+                </div>
+            {% endif %}
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0) 100%);"></div>
+            
+            <!-- Badges -->
+            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                <span style="color: white; font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-users" style="color: var(--accent);"></i> {{ trip.trip_type }} Trip</span>
+            </div>
+            
+            <!-- Title -->
+            <div style="position: absolute; bottom: 1rem; left: 1.5rem; right: 1.5rem;">
+                <h3 style="font-size: 1.8rem; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">{{ trip.name }}</h3>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; margin: 0;">
+                    <i class="fa-regular fa-calendar" style="color: var(--accent);"></i> {{ trip.start_date|date:"M d" }} - {{ trip.end_date|date:"M d, Y" }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div style="padding: 1.5rem;">
+            <!-- Budget Tracker Widget -->
+            <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Budget Plan</p>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: #10b981;">₹{{ trip.budget }}</div>
+                </div>
+                <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-wallet" style="color: #10b981; font-size: 1.2rem;"></i>
+                </div>
+            </div>
+
+            <!-- Destinations & Famous For -->
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Destinations Overview</h4>
+            {% if trip.stops.all %}
+                <div style="margin-bottom: 1.5rem;">
+                    {% for stop in trip.stops.all %}
+                        <div class="destination-item" style="display: flex; align-items: flex-start; margin-bottom: 0.8rem; padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px; transition: transform 0.3s ease;">
+                            <img src="{{ stop.city.image_url }}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 1rem; border: 1px solid var(--glass-border);">
+                            <div>
+                                <h5 style="margin: 0; font-size: 1rem;">{{ stop.city.name }}</h5>
+                                <p style="color: var(--accent); font-size: 0.8rem; margin: 0.2rem 0 0 0; line-height: 1.3;">
+                                    <i class="fa-solid fa-star"></i> Famous For: {{ stop.city.famous_for|default:"Rich culture and landscapes" }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: var(--text-secondary); font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem;">No destinations added to this trip yet.</p>
+            {% endif %}
+
+            <a href="{% url 'itinerary' trip.id %}" class="btn btn-secondary" style="width: 100%; text-align: center; font-weight: 600; padding: 0.8rem;"><i class="fa-solid fa-route"></i> Open Trip Planner</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="glass-card text-center" style="padding: 5rem 2rem; animation: fadeInUp 0.8s ease forwards;">
+    <div style="width: 100px; height: 100px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+        <i class="fa-solid fa-earth-americas" style="font-size: 4rem; color: var(--accent);"></i>
+    </div>
+    <h3 style="font-size: 2rem;">No trips planned yet!</h3>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Start exploring and create your first highly-customized itinerary.</p>
+    <a href="{% url 'create_trip' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);">Plan Your First Trip</a>
+</div>
+{% endif %}
+
+<style>
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.trip-dashboard-card {
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-light);
+}
+
+.trip-dashboard-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.destination-item:hover {
+    transform: translateX(5px);
+    background: rgba(255,255,255,0.05) !important;
+}
+</style>
+{% endblock %}

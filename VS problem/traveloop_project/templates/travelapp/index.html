@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Animated Hero Section -->
+<section class="hero" style="margin: -2rem -5% 4rem -5%; position: relative; overflow: hidden; background: url('{% static 'images/luxury_travel_hero.png' %}') center/cover;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));"></div>
+    <!-- Floating Decorative Elements -->
+    <div class="floating-element float-1">
+        <i class="fa-solid fa-plane" style="color: var(--accent); font-size: 1.5rem;"></i>
+        <div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Next Flight</p>
+            <p style="font-weight: 600; margin: 0;">Delhi, IN</p>
+        </div>
+    </div>
+    
+    <div class="floating-element float-2">
+        <i class="fa-solid fa-umbrella-beach" style="color: var(--accent); font-size: 1.5rem;"></i>
+        <div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">Top Destination</p>
+            <p style="font-weight: 600; margin: 0;">Goa</p>
+        </div>
+    </div>
+
+    <div class="hero-content" style="position: relative; z-index: 2;">
+        <h2 class="script-font" style="font-size: 3rem; margin-bottom: -1rem; transform: rotate(-5deg); display: inline-block; animation: pulse 2s infinite ease-in-out;">Explore the world</h2>
+        <h1>Create Unforgettable <br><span style="color: var(--accent);">Travel Experiences</span></h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">Manage your itineraries, budgets, and companions all in one place. Discover why top destinations are famous and plan the perfect getaway with Traveloop.</p>
+        
+        <div class="hero-btns">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary" style="margin-right: 1rem;">Go to Dashboard</a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-primary" style="margin-right: 1rem;">Start Planning Now</a>
+                <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Top Indian Destinations / Translated TravelCards -->
+<div class="container" style="padding-top: 0;">
+    <div class="section-title">
+        <h3 class="script-font" style="font-size: 2rem;">Trending</h3>
+        <h2>Top 10 Indian Destinations</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Experience the breathtaking beauty, rich history, and vibrant culture of India's finest cities.</p>
+    </div>
+
+    <div class="grid grid-cols-3" style="gap: 3rem;">
+        {% for city in cities %}
+        <div class="travel-card" data-animation-delay="{{ forloop.counter0|add:"1" }}00" style="opacity: 0; transform: translateY(20px); transition: transform 0.4s ease, box-shadow 0.4s ease;">
+            <img src="{% if city.name == 'Goa' %}{% static 'images/goa_adventure.png' %}{% else %}{{ city.image_url }}{% endif %}" alt="{{ city.name }}" class="travel-card-image" style="transition: transform 0.6s ease;">
+            <div class="travel-card-overlay"></div>
+            
+            <div class="travel-card-content">
+                <!-- Logo Space (Optional) -->
+                <div style="height: 40px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-map-pin" style="font-size: 1rem; color: white;"></i>
+                    </div>
+                </div>
+                
+                <div class="travel-card-middle">
+                    <h3>{{ city.name }}</h3>
+                    <p class="location">{{ city.state }}, India • Popularity: {{ city.popularity }}/10</p>
+                    
+                    <h4>Famous For</h4>
+                    <p class="overview" style="color: var(--accent); font-weight: 500;">
+                        {{ city.famous_for|default:"Stunning landscapes and rich culture." }}
+                    </p>
+                </div>
+                
+                <div class="travel-card-bottom">
+                    <div>
+                        <span class="price-val">{{ city.cost_index }}</span>
+                        <span class="price-period"> Cost Index</span>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'city_detail' city.id %}" class="travel-card-btn">Explore {{ city.name }} <i class="fa-solid fa-arrow-right" style="margin-left: 0.5rem; font-size: 0.8rem;"></i></a>
+                    {% else %}
+                        <a href="{% url 'city_detail' city.id %}" class="travel-card-btn">Explore {{ city.name }} <i class="fa-solid fa-arrow-right" style="margin-left: 0.5rem; font-size: 0.8rem;"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Promo Section -->
+<section style="background: var(--bg-secondary); padding: 5rem 5%; margin: 0 -5%;">
+    <div class="container grid grid-cols-2 items-center" style="padding: 0;">
+        <div>
+            <h3 class="script-font" style="font-size: 2.5rem; margin-bottom: -1rem;">Why choose us?</h3>
+            <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Plan Your Trip <br>With <span style="color: var(--accent);">Confidence</span></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+                Traveloop simplifies the complexity of planning travel. Manage your itineraries, budgets, and companions (Couple, Single, Family) all in one beautiful, organized place.
+            </p>
+            <ul style="list-style: none; color: var(--text-primary); font-weight: 500;">
+                <li style="margin-bottom: 1rem; animation: fadeInLeft 0.5s ease forwards; opacity: 0;"><i class="fa-solid fa-users" style="color: var(--accent); margin-right: 0.5rem;"></i> Travel Companions & Trip Types</li>
+                <li style="margin-bottom: 1rem; animation: fadeInLeft 0.5s ease forwards; animation-delay: 0.2s; opacity: 0;"><i class="fa-solid fa-wallet" style="color: var(--accent); margin-right: 0.5rem;"></i> Smart Budget Tracking</li>
+                <li style="margin-bottom: 1rem; animation: fadeInLeft 0.5s ease forwards; animation-delay: 0.4s; opacity: 0;"><i class="fa-solid fa-star" style="color: var(--accent); margin-right: 0.5rem;"></i> Famous Places & Activities Highlighted</li>
+            </ul>
+        </div>
+        <div style="position: relative;">
+            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&q=80&w=1000" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Travel">
+            <div class="floating-element" style="bottom: -20px; left: -20px; animation-delay: 1s;">
+                <h3 style="color: var(--accent); font-size: 2rem; margin: 0;">10k+</h3>
+                <p style="margin: 0; font-weight: 500;">Trips Planned</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes pulse {
+    0% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(-5deg) scale(1.05); }
+    100% { transform: rotate(-5deg) scale(1); }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.travel-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.travel-card:hover .travel-card-image {
+    transform: scale(1.1);
+}
+
+.travel-card-btn {
+    transition: all 0.3s ease;
+}
+
+.travel-card-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateX(5px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.travel-card');
+    cards.forEach(function(card, index) {
+        const delay = card.getAttribute('data-animation-delay');
+        if (delay) {
+            card.style.animation = 'fadeInUp 0.8s ease forwards';
+            card.style.animationDelay = delay + 'ms';
+        }
+    });
+});
+</script>
+<style>
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+</style>
+{% endblock %}

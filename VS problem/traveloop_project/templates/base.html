@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Traveloop | Professional Travel Planning{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'index' %}" class="logo">
+            <i class="fa-solid fa-map-location-dot"></i> Traveloop
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'index' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">My Trips</a>
+                {% if user.is_staff %}
+                    <a href="{% url 'admin_panel' %}">Admin Panel</a>
+                {% endif %}
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none;border:none;color:inherit;cursor:pointer;font-size:1rem;margin-left:2rem;font-weight:500;">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-primary" style="margin-left: 2rem;">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <div class="container" style="padding: 0;">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="logo" style="color: white; margin-bottom: 1rem;">
+                        <i class="fa-solid fa-map-location-dot"></i> Traveloop
+                    </h3>
+                    <p style="color: #aaa; font-size: 0.9rem;">
+                        Your ultimate travel planning companion. Dream, design, and organize multi-city trips effortlessly.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="{% url 'index' %}">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Destinations</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Tour Types</h3>
+                    <a href="#">Family Packages</a>
+                    <a href="#">Honeymoon</a>
+                    <a href="#">Corporate Events</a>
+                    <a href="#">Group Tours</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-envelope"></i> hello@traveloop.com</p>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                        <a href="#" style="font-size: 1.5rem;"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" style="font-size: 1.5rem;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" style="font-size: 1.5rem;"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #333; padding-top: 1.5rem; text-align: center; color: #666; font-size: 0.9rem;">
+                &copy; 2026 Traveloop. Designed for Hackathon. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

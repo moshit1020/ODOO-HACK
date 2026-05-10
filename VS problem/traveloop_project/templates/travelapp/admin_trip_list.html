@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Manage Trips{% endblock %}
+
+{% block content %}
+<div class="glass-card" style="padding: 2rem; max-width: 1100px; margin: 2rem auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+            <h1 style="margin: 0;">Trip Management</h1>
+            <p style="color: var(--text-secondary);">Review or remove user trips created through the site.</p>
+        </div>
+        <a href="{% url 'admin_panel' %}" class="btn btn-secondary">Back to Admin Panel</a>
+    </div>
+
+    {% if trips %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>User</th>
+                <th>Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th style="text-align:right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in trips %}
+            <tr>
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.user.username }}</td>
+                <td>{{ trip.trip_type }}</td>
+                <td>{{ trip.start_date }}</td>
+                <td>{{ trip.end_date }}</td>
+                <td style="text-align:right;">
+                    <a href="{% url 'itinerary' trip.id %}" class="btn btn-secondary" style="margin-right: 0.5rem;">View</a>
+                    <a href="{% url 'admin_trip_delete' trip.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color: var(--text-secondary);">No trips are available yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

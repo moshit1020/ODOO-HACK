@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<div class="glass-card" style="padding: 2rem; max-width: 1000px; margin: 2rem auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+            <h1 style="margin: 0;">Admin Panel</h1>
+            <p style="color: var(--text-secondary);">Manage cities, trips, and platform data from inside the website.</p>
+        </div>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="admin-card">
+            <h3>{{ city_count }}</h3>
+            <p>Registered Cities</p>
+        </div>
+        <div class="admin-card">
+            <h3>{{ trip_count }}</h3>
+            <p>Created Trips</p>
+        </div>
+        <div class="admin-card">
+            <h3>{{ user_count }}</h3>
+            <p>Active Users</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+        <a href="{% url 'admin_city_list' %}" class="admin-action-card">Manage Cities</a>
+        <a href="{% url 'admin_trip_list' %}" class="admin-action-card">Manage Trips</a>
+        <a href="{% url 'dashboard' %}" class="admin-action-card">View User Dashboard</a>
+    </div>
+</div>
+
+<style>
+.admin-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    min-height: 120px;
+}
+.admin-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 2.25rem;
+}
+.admin-action-card {
+    display: block;
+    padding: 1.5rem;
+    border-radius: 18px;
+    background: rgba(59,130,246,0.12);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(59,130,246,0.25);
+}
+.admin-action-card:hover {
+    background: rgba(59,130,246,0.18);
+}
+</style>
+{% endblock %}
